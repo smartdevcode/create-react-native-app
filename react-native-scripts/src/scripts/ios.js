@@ -8,7 +8,6 @@ import path from 'path';
 import pathExists from 'path-exists';
 import qr from 'qrcode-terminal';
 import log from '../util/log';
-import { hasYarn } from '../util/pm';
 
 import packager from '../util/packager';
 
@@ -16,7 +15,7 @@ Config.validation.reactNativeVersionWarnings = false;
 Config.developerTool = 'crna';
 Config.offline = true;
 
-const command: string = hasYarn(process.cwd()) ? 'yarnpkg' : 'npm';
+const command: string = pathExists.sync(path.join(process.cwd(), 'yarn.lock')) ? 'yarnpkg' : 'npm';
 
 if (!Simulator.isPlatformSupported()) {
   log(

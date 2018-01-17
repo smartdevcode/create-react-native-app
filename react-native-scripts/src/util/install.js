@@ -4,7 +4,6 @@ import spawn from 'cross-spawn';
 import pathExists from 'path-exists';
 import path from 'path';
 import log from '../util/log';
-import { hasYarn } from './pm';
 
 type InstallResult = {
   code: number,
@@ -18,7 +17,7 @@ export default (async function install(
   packageVersion?: string,
   options?: any = {}
 ): Promise<InstallResult> {
-  const useYarn: boolean = hasYarn(appPath);
+  const useYarn: boolean = await pathExists(path.join(appPath, 'yarn.lock'));
 
   let command = '';
   let args = [];
